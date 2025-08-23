@@ -28,9 +28,18 @@ class ConceptoResource extends Resource
     {
         return $schema
             ->components([
-                TextInput::make('Concepto')
-                    ->required()
-                    ->maxLength(255),
+                TextInput::make('nombre')
+                ->label('Nombre')
+                ->required()
+                ->columnSpanFull()
+                ->maxLength(255),
+                \Filament\Forms\Components\MarkdownEditor::make('descripcion')
+                ->columnSpanFull()
+                ->label('Descripción')
+                ->maxLength(255),
+                TextInput::make('atributos')
+                ->label('Etiquetas')
+                ->columnSpanFull(),
             ]);
     }
 
