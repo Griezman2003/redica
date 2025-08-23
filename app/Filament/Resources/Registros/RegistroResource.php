@@ -36,8 +36,8 @@ class RegistroResource extends Resource
                 ->maxLength(255),
                 TextInput::make('monto')
                 ->label('Monto')
-                ->required()
-                ->maxLength(255),
+                ->money('MXN')
+                ->required(),
                 Select::make('concepto_id')
                 ->label('Concepto')
                 ->relationship('concepto', 'nombre')
