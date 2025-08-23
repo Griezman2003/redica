@@ -37,19 +37,27 @@ class ConceptoResource extends Resource
                 ->columnSpanFull()
                 ->label('Descripción')
                 ->maxLength(255),
-                TextInput::make('atributos')
-                ->label('Etiquetas')
-                ->columnSpanFull(),
+                \Filament\Forms\Components\TagsInput::make('atributos')
+                    ->label('Etiquetas')
+                    ->placeholder('Ejemplo (Pago Internet) y presiona Enter')
+                    ->separator(',')
+                    ->required()
+                    ->columnSpanFull(),
             ]);
     }
 
     public static function table(Table $table): Table
     {
         return $table
-            ->recordTitleAttribute('Concepto')
             ->columns([
-                TextColumn::make('Concepto')
+                TextColumn::make('nombre')
+                    ->label('Nombre')
                     ->searchable(),
+                TextColumn::make('descripcion')
+                    ->label('Descripción')
+                    ->searchable(),
+                \Filament\Tables\Columns\TagsColumn::make('atributos')
+                    ->label('Etiquetas'),
             ])
             ->filters([
                 //

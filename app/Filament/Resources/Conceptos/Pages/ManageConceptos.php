@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Conceptos\Pages;
 
 use App\Filament\Resources\Conceptos\ConceptoResource;
-use Filament\Actions\CreateAction;
+use Filament\Actions;
 use Filament\Resources\Pages\ManageRecords;
 
 class ManageConceptos extends ManageRecords
@@ -13,7 +13,7 @@ class ManageConceptos extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            Actions\CreateAction::make(),
         ];
     }
 }

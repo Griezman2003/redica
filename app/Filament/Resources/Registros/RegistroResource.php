@@ -5,6 +5,7 @@ namespace App\Filament\Resources\Registros;
 use App\Filament\Resources\Registros\Pages\ManageRegistros;
 use App\Models\Registro;
 use BackedEnum;
+use Dom\Text;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
@@ -39,7 +40,12 @@ class RegistroResource extends Resource
                 ->maxLength(255),
                 Select::make('concepto_id')
                 ->label('Concepto')
+                ->relationship('concepto', 'nombre')
                 ->required(),
+                \Filament\Forms\Components\Toggle::make('estado')
+                ->label('Activo')
+                ->default(true),
+                
             ]);
     }
 
@@ -53,9 +59,19 @@ class RegistroResource extends Resource
                 TextColumn::make('monto')
                 ->label('Monto')
                 ->searchable(),
-                TextColumn::make('concepto_id')
+                TextColumn::make('concepto.nombre')
                 ->label('Concepto')
                 ->searchable(),
+                TextColumn::make('estado')
+                ->label('Estado')
+                ->getStateUsing(function ($record) {
+                    return $record->estado ? 'Activo' : 'No activo';
+                })
+                ->colors([
+                    'success' => 'Activo',
+                    'danger' => 'No activo',
+                ])
+                ->badge(),
                 TextColumn::make('created_at')
                     ->dateTime('d/m/Y H:i')
                     ->label('Creado')

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId("concepto_id")->constrained();
             $table->string('nombre')->unique();
             $table->string('monto');
+            $table->boolean('estado')->default(true);
             $table->timestamps();
         });
     }

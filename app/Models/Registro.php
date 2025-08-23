@@ -6,5 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Registro extends Model
 {
-    protected $fillable = ['concepto_id', 'nombre', 'monto'];
+    protected $fillable = ['concepto_id', 'nombre', 'monto', 'estado'];
+
+    public function concepto()
+    {
+        return $this->belongsTo(Concepto::class);
+    }
 }
