@@ -36,7 +36,7 @@ class RegistroResource extends Resource
                 ->maxLength(255),
                 TextInput::make('monto')
                 ->label('Monto')
-                ->money('MXN')
+                ->numeric()
                 ->required(),
                 Select::make('concepto_id')
                 ->label('Concepto')
@@ -58,6 +58,7 @@ class RegistroResource extends Resource
                 ->searchable(),
                 TextColumn::make('monto')
                 ->label('Monto')
+                ->money('MXN')
                 ->searchable(),
                 TextColumn::make('concepto.nombre')
                 ->label('Concepto')
