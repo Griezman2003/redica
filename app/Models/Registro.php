@@ -7,33 +7,20 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class Registro extends Model
 {
-    protected $fillable = ['concepto_id', 'nombre', 'monto', 'uuid', 'mes','estado'];
+    protected $fillable = ['user_id', 'nombre', 'estado'];
 
     public function concepto()
     {
         return $this->belongsTo(Concepto::class);
     }
 
-    /**
-     * Metodo que retorna el contenido del pdf del ticket
-     *
-     * @return string
-     */
-    public function pdf(): string
+    public function pago()
     {
-        if (!\Illuminate\Support\Facades\Storage::disk('local')->exists("tickets/{$this->uuid}.pdf")) {
-            $this->generarPdf($this->toArray());
-        }
-        return \Illuminate\Support\Facades\Storage::disk('local')->get("tickets/{$this->uuid}.pdf");
+        return $this->hasMany(Pago::class);
     }
 
-    public static function generarPdf($data): string
+    public function user()
     {
-        $pdf = Pdf::loadView('pdf.ticket', [
-            'data' => $data,
-        ]);
-        $fileName = $data['uuid']. '.pdf';
-        \Illuminate\Support\Facades\Storage::disk('local')->put('tickets/' . $fileName, $pdf->output());
-        return 'tickets/' . $fileName;
+        return $this->belongsTo(User::class);
     }
 }

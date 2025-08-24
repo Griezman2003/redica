@@ -13,6 +13,11 @@ class Concepto extends Model
         return $this->hasMany(Registro::class);
     }
 
+    public function pago()
+    {
+        return $this->hasMany(Pago::class);
+    }
+
     protected $casts = [
     'atributos' => 'array',
     ];

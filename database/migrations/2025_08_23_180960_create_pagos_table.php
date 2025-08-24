@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('registros', function (Blueprint $table) {
+        Schema::create('pagos', function (Blueprint $table) {
             $table->id();
+            $table->foreignId("registro_id")->constrained();
             $table->foreignId("concepto_id")->constrained();
-            $table->string('nombre')->unique();
             $table->decimal('monto', 12, 2);
             $table->string('uuid')->unique();
             $table->string('mes');
-            $table->boolean('estado')->default(true);
+            $table->string('pendiente')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('registros');
+        Schema::dropIfExists('pagos');
     }
 };

@@ -2,7 +2,7 @@
 
 namespace App\Exports;
 
-use App\Models\Registro;
+use App\Models\Pago;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
@@ -14,9 +14,8 @@ class RegistroExport implements FromCollection , WithHeadings, WithMapping
     */
     public function collection()
     {
-        return Registro::select('nombre', 'monto', 'estado', 'mes', 'uuid', 'created_at', 'updated_at')->get();
+        return Pago::with('registro')->get();
     }
-
     /**
      * se especifica el nombre de los emcabezados del excel
      *
@@ -27,7 +26,6 @@ class RegistroExport implements FromCollection , WithHeadings, WithMapping
         return [
             'nombre',
             'monto',
-            'estado',
             'mes de pago',
             'uuid',
             'creado el',
@@ -41,16 +39,15 @@ class RegistroExport implements FromCollection , WithHeadings, WithMapping
      * @param [type] $registro
      * @return array
      */
-    public function map($registro): array
+    public function map($pago): array
     {
         return [
-            $registro->nombre,
-            '$' . number_format($registro->monto, 2),
-            $registro->estado ? 'Activo' : 'No activo',
-            $registro->mes,
-            $registro->uuid,
-            $registro->created_at->format('d/m/Y H:i'),
-            $registro->updated_at->format('d/m/Y H:i'),
+            $pago->registro->nombre,
+            '$' . number_format($pago->monto, 2),
+            $pago->mes,
+            $pago->uuid,
+            $pago->created_at->format('d/m/Y H:i'),
+            $pago->updated_at->format('d/m/Y H:i'),
         ];
     }
 }

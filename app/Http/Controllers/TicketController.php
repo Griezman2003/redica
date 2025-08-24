@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Registro;
+use App\Models\Pago;
 
 class TicketController extends Controller
 {
-    public function pdf(Registro $registro)
+    public function pdf(Pago $pago)
     {
-        return response($registro->pdf())
+        return response($pago->pdf())
         ->header("Content-Type", "application/pdf")
         ->header(
             "Content-Disposition",
-            'inline; filename="' . $registro->nombre . '.pdf"',
+            'inline; filename="' . $pago->nombre . '.pdf"',
         );
     }
 }

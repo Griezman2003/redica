@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function registro()
+    {
+        return $this->hasMany(Registro::class);
+    }
 }

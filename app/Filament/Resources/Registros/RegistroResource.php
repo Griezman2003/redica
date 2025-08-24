@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Registros;
 
 use App\Filament\Resources\Registros\Pages\ManageRegistros;
+use App\Filament\Resources\Registros\RelationManagers;
 use App\Models\Registro;
 use BackedEnum;
 use Dom\Text;
@@ -20,6 +21,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Malzariey\FilamentDaterangepickerFilter\Fields\DateRangePicker;
 
+
 class RegistroResource extends Resource
 {
     protected static ?string $model = Registro::class;
@@ -36,18 +38,6 @@ class RegistroResource extends Resource
                 ->label('Nombre')
                 ->required()
                 ->maxLength(255),
-                TextInput::make('monto')
-                ->label('Monto')
-                ->numeric()
-                ->required(),
-                Select::make('concepto_id')
-                ->label('Concepto')
-                ->relationship('concepto', 'nombre')
-                ->required(),
-                DateRangePicker::make('mes')
-                ->label('Pago respecto a ese mes')
-                ->icon('heroicons-backspace')
-                ->timezone('UTC'),
                 \Filament\Forms\Components\Toggle::make('estado')
                 ->label('Activo')
                 ->default(true),
@@ -61,13 +51,6 @@ class RegistroResource extends Resource
                 TextColumn::make('nombre')
                 ->label('Nombre')
                 ->searchable(),
-                TextColumn::make('monto')
-                ->label('Monto')
-                ->money('MXN')
-                ->searchable(),
-                TextColumn::make('concepto.nombre')
-                ->label('Concepto')
-                ->searchable(),
                 TextColumn::make('estado')
                 ->label('Estado')
                 ->getStateUsing(function ($record) {
@@ -78,63 +61,27 @@ class RegistroResource extends Resource
                     'danger' => 'No activo',
                 ])
                 ->badge(),
-                TextColumn::make('mes')
-                    ->label('Mes de Pago')
-                    ->sortable(),
-                TextColumn::make('uuid')
-                    ->label('Uuid')
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('created_at')
-                    ->dateTime('d/m/Y H:i')
-                    ->label('Creado')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('updated_at')
-                    ->dateTime('d/m/Y H:i')
-                    ->label('Actualizado')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                \Filament\Actions\ActionGroup::make([
-                    \Filament\Actions\Action::make("Ver")
-                        ->label("Ticket")
-                        ->icon("heroicon-o-eye")
-                        ->color("primary")
-                        ->modalHeading("Vista previa del pago")
-                        ->modalContent(
-                            fn($record) => view("partials.pdf", [
-                                "url" => route("pdf", [
-                                    "registro" => $record,
-                                ]),
-                            ]),
-                        )
-                        ->modalWidth("6xl")
-                ->slideOver()
-                ->modalSubmitAction(false),
-                EditAction::make(),
                 DeleteAction::make(),
-                ])->button()
-                ->badge()
-                ->icon('heroicon-o-ellipsis-vertical')
-            ])
-            ->toolbarActions([
-                BulkAction::make('Exportar a Excel')
-                    ->action(function ($records) {
-                        $export = new \App\Exports\RegistroExport();
-                        return \Maatwebsite\Excel\Facades\Excel::download($export, 'redIca.xlsx');
-                    })
-                ->color('success'),
             ]);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            RelationManagers\PagoRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
     {
         return [
             'index' => ManageRegistros::route('/'),
+            "edit" => Pages\EditRegistro::route("/{record}/edit"),
             "create" => Pages\createRegistro::route("/create"),
         ];
     }

@@ -12,8 +12,6 @@ class CreateRegistro extends CreateRecord
     protected function mutateFormDataBeforeCreate(array $data): array
     {
         $data['user_id'] = \Illuminate\Support\Facades\Auth::id();
-        $data['uuid'] = \Illuminate\Support\Str::uuid()->toString();
-        \App\Models\Registro::generarPdf($data);
         return $data;
     }
 
