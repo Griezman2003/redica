@@ -86,8 +86,32 @@ class RegistroResource extends Resource
                 //
             ])
             ->recordActions([
+                \Filament\Actions\ActionGroup::make([
+                    \Filament\Actions\Action::make("Ver")
+                        ->label("Ticket")
+                        ->icon("heroicon-o-eye")
+                        ->color("primary")
+                        ->modalHeading("Vista previa del pago")
+                        ->modalContent(
+                            fn($record) => view("partials.pdf", [
+                                "url" => route("pdf", [
+                                    "registro" => $record,
+                                ]),
+                            ]),
+                        )
+                        ->modalWidth("6xl")
+                    //     ->modalCancelAction(
+                    //         fn(
+                    //             \Filament\Actions\StaticAction $action,
+                    //     ) => $action->label("Cerrar"),
+                    // )
+                ->slideOver()
+                ->modalSubmitAction(false),
                 EditAction::make(),
                 DeleteAction::make(),
+                ])->button()
+                ->badge()
+                ->icon('heroicon-o-ellipsis-vertical')
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
@@ -100,6 +124,7 @@ class RegistroResource extends Resource
     {
         return [
             'index' => ManageRegistros::route('/'),
+            "create" => Pages\createRegistro::route("/create"),
         ];
     }
 }
