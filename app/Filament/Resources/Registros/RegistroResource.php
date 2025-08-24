@@ -45,6 +45,7 @@ class RegistroResource extends Resource
                 ->required(),
                 DateRangePicker::make('mes')
                 ->label('Pago respecto a ese mes')
+                ->icon('heroicons-backspace')
                 ->timezone('UTC'),
                 \Filament\Forms\Components\Toggle::make('estado')
                 ->label('Activo')
