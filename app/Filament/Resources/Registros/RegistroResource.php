@@ -7,6 +7,7 @@ use App\Models\Registro;
 use BackedEnum;
 use Dom\Text;
 use Filament\Actions\BulkActionGroup;
+use Filament\Actions\BulkAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -121,9 +122,12 @@ class RegistroResource extends Resource
                 ->icon('heroicon-o-ellipsis-vertical')
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                BulkAction::make('Exportar a Excel')
+                    ->action(function ($records) {
+                        $export = new \App\Exports\RegistroExport();
+                        return \Maatwebsite\Excel\Facades\Excel::download($export, 'redIca.xlsx');
+                    })
+                ->color('success'),
             ]);
     }
 
