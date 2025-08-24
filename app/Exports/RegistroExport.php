@@ -24,10 +24,10 @@ class RegistroExport implements FromCollection , WithHeadings, WithMapping
             'nombre',
             'monto',
             'estado',
-            'mes',
+            'mes de pago',
             'uuid',
-            'created_at',
-            'updated_at'
+            'creado el',
+            'actualizado el'
         ];
     }
 
@@ -41,7 +41,7 @@ class RegistroExport implements FromCollection , WithHeadings, WithMapping
     {
         return [
             $registro->nombre,
-            $registro->monto,
+            '$' . number_format($registro->monto, 2),
             $registro->estado ? 'Activo' : 'No activo',
             $registro->mes,
             $registro->uuid,

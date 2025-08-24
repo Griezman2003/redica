@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("concepto_id")->constrained();
             $table->string('nombre')->unique();
-            $table->string('monto');
+            $table->decimal('monto', 12, 2);
             $table->string('uuid')->unique();
             $table->string('mes');
             $table->boolean('estado')->default(true);
