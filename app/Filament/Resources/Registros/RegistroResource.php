@@ -100,11 +100,6 @@ class RegistroResource extends Resource
                             ]),
                         )
                         ->modalWidth("6xl")
-                    //     ->modalCancelAction(
-                    //         fn(
-                    //             \Filament\Actions\StaticAction $action,
-                    //     ) => $action->label("Cerrar"),
-                    // )
                 ->slideOver()
                 ->modalSubmitAction(false),
                 EditAction::make(),
