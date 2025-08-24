@@ -17,7 +17,11 @@ class RegistroExport implements FromCollection , WithHeadings, WithMapping
         return Registro::select('nombre', 'monto', 'estado', 'mes', 'uuid', 'created_at', 'updated_at')->get();
     }
 
-    
+    /**
+     * se especifica el nombre de los emcabezados del excel
+     *
+     * @return array
+     */
     public function headings(): array
     {
         return [
