@@ -17,6 +17,7 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Malzariey\FilamentDaterangepickerFilter\Fields\DateRangePicker;
 
 class RegistroResource extends Resource
 {
@@ -42,10 +43,12 @@ class RegistroResource extends Resource
                 ->label('Concepto')
                 ->relationship('concepto', 'nombre')
                 ->required(),
+                DateRangePicker::make('mes')
+                ->label('Pago respecto a ese mes')
+                ->timezone('UTC'),
                 \Filament\Forms\Components\Toggle::make('estado')
                 ->label('Activo')
                 ->default(true),
-                
             ]);
     }
 
@@ -73,14 +76,22 @@ class RegistroResource extends Resource
                     'danger' => 'No activo',
                 ])
                 ->badge(),
+                TextColumn::make('mes')
+                    ->label('Mes de Pago')
+                    ->sortable(),
+                TextColumn::make('uuid')
+                    ->label('Uuid')
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                     ->dateTime('d/m/Y H:i')
                     ->label('Creado')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
                     ->dateTime('d/m/Y H:i')
                     ->label('Actualizado')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('nombre')->unique();
             $table->string('monto');
             $table->string('uuid')->unique();
+            $table->string('mes');
             $table->boolean('estado')->default(true);
             $table->timestamps();
         });
