@@ -29,7 +29,7 @@ class AppPanelProvider extends PanelProvider
             ->path('app')
             ->login()
             ->colors([
-                'primary' => '#8b1d42',
+                'primary' => '#e40b2fff',
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
@@ -61,6 +61,9 @@ class AppPanelProvider extends PanelProvider
             ->unsavedChangesAlerts()
             ->sidebarCollapsibleOnDesktop()
             ->unsavedChangesAlerts()
+            ->favicon(asset("img/antena.svg"))
+            ->brandLogoHeight("4rem")
+            ->brandLogo(asset("img/antena.svg"))
             ->profile();
     }
 }

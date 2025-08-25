@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" style="enable-background:new 0 0 47.5 47.5" viewBox="0 0 47.5 47.5" id="antenna">
+  <defs>
+    <clipPath id="a">
+      <path d="M0 38h38V0H0v38Z"></path>
+    </clipPath>
+  </defs>
+  <g clip-path="url(#a)" transform="matrix(1.25 0 0 -1.25 0 47.5)">
+    <path d="M0 0c1.668 0 7.43-4.345 7.427-9.701C7.43-15.06-7.426-15.06-7.427-9.7-7.426-4.345-1.668 0 0 0" style="fill:#99aab5;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="translate(11.746 15.48)"></path>
+    <path d="M0 0c8.839-8.84 17.337-5.163 20.033-2.469 2.695 2.697-.158 9.916-6.371 16.129-6.215 6.214-13.435 9.067-16.13 6.372C-5.164 17.337-8.84 8.838 0 0" style="fill:#ccd6dd;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="translate(9.54 11.818)"></path>
+    <path d="M0 0c6.214-6.214 13.435-9.066 16.13-6.372 2.695 2.696-.158 9.916-6.371 16.129-6.215 6.213-13.435 9.067-16.13 6.371C-9.066 13.434-6.213 6.212 0 0" style="fill:#66757f;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="translate(13.443 15.722)"></path>
+    <path d="M0 0a1.138 1.138 0 0 0 0-1.607l-7.233-7.231A1.136 1.136 0 1 0-8.84-7.231L-1.608 0A1.135 1.135 0 0 0 0 0" style="fill:#ccd6dd;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="translate(23.202 25.479)"></path>
+    <path d="M0 0a2.274 2.274 0 1 0-3.217-3.214A2.274 2.274 0 0 0 0 0" style="fill:#ccd6dd;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="translate(24.809 27.085)"></path>
+    <path d="m0 0-.051.001A1.001 1.001 0 0 0-1 1.05c.001.016.063 2.157-1.58 3.8-1.638 1.637-3.773 1.579-3.801 1.58a.999.999 0 1 0-.099 1.997c.122.012 3.028.123 5.314-2.163C1.121 3.977 1.004 1.073.998.95A1 1 0 0 0 0 0" style="fill:#ffac33;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="translate(29.287 23.922)"></path>
+    <path d="M0 0a.998.998 0 0 0-.943 1.331c.034.107.892 2.877-2.196 5.963-3.126 3.127-6.126 2.415-6.252 2.383a1.001 1.001 0 0 0-1.215.715.994.994 0 0 0 .701 1.217c.17.046 4.205 1.078 8.18-2.901C2.291 4.695 1.001.833.943.67A.998.998 0 0 0 0 0" style="fill:#ffac33;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="translate(32.846 24.478)"></path>
+    <path d="M0 0c-2.9 0-5.543.658-7.566 1.737-.008-.146-.029-.29-.029-.437.001-5.36 14.857-5.36 14.854-.001 0 .09-.014.177-.017.265C5.264.588 2.746 0 0 0" style="fill:#66757f;fill-opacity:1;fill-rule:nonzero;stroke:none" transform="translate(11.914 4.48)"></path>
+  </g>
+</svg>
