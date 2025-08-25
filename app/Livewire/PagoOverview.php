@@ -54,13 +54,13 @@ class PagoOverview extends StatsOverviewWidget
                 ->icon('heroicon-o-calendar')
                 ->chart(array_values($pagosPorHora->toArray())),
 
-            Stat::make('Monto Este Mes', $montoPagosMes)
+            Stat::make('Monto Mensual', $montoPagosMes)
                 ->description('$' . number_format($montoPagosMes, 2))
                 ->color('primary')
                 ->icon('heroicon-o-calendar-days')
                 ->chart(array_values($montoPorDia->toArray())),
 
-            Stat::make('Total Pagos', $totalPagos)
+            Stat::make('Monto Anual', $totalPagos)
                 ->description('$' . number_format($totalPagos, 2))
                 ->color('success')
                 ->icon('heroicon-o-currency-dollar')
