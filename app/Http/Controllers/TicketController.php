@@ -13,7 +13,7 @@ class TicketController extends Controller
         ->header("Content-Type", "application/pdf")
         ->header(
             "Content-Disposition",
-            'inline; filename="' . $pago->uuid . '.pdf"',
+            'inline; filename="' . $pago->registro->nombre . '.pdf"',
         );
     }
 }
