@@ -31,7 +31,6 @@ class PagoRelationManager extends RelationManager
                     ->default(\Illuminate\Support\Str::uuid()->toString())
                     ->dehydrated(true)
                     ->hidden(),
-                
                 TextInput::make('monto')
                 ->label('Monto')
                 ->numeric()
