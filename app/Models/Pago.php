@@ -47,6 +47,11 @@ class Pago extends Model
         return 'tickets/' . $fileName;
     }
 
+    /**
+     * Evento al crear un pago:
+     * Si no existe un UUID asignado, se genera automáticamente.
+     * @return void
+     */
     protected static function booted()
     {
         static::creating(function ($pago) {
