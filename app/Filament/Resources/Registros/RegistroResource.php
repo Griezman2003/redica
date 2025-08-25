@@ -26,7 +26,7 @@ class RegistroResource extends Resource
 {
     protected static ?string $model = Registro::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::ClipboardDocumentList;
 
     protected static ?string $recordTitleAttribute = 'Registro';
 
