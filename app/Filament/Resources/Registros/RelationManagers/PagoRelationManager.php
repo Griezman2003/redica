@@ -43,6 +43,7 @@ class PagoRelationManager extends RelationManager
                 ->preload()
                 ->columnSpanFull()
                 ->default(['enero']),
+                /*
                 \Filament\Schemas\Components\Section::make('Pendiente Pago')
                 ->description('Seccion de pagos pendientes')
                 ->schema([
@@ -71,10 +72,10 @@ class PagoRelationManager extends RelationManager
                             $component->state(['Enero']);
                         }
                     }),
-                ])
-                ->columnSpanFull()
-                ->columns(2)
-            ]);
+                    */
+                ]);
+                // ->columnSpanFull()
+                // ->columns(2)
     }
 
     public function table(Table $table): Table
@@ -96,9 +97,16 @@ class PagoRelationManager extends RelationManager
                 ->label('Meses pagados')
                 ->searchable()
                 ->badge(),
+                /*
                 TextColumn::make('pendiente')
                 ->label('Mes Pendiente')
-                ->badge(),
+                ->badge()
+                ->formatStateUsing(fn ($state) => 
+                    str_word_count($state) > 5
+                        ? implode(', ', array_slice(explode(', ', $state), 0, 5)) . ' ...'
+                        : $state
+                ),
+                */
                 TextColumn::make('uuid')
                 ->label('Uuid')
                 ->toggleable(isToggledHiddenByDefault: true),

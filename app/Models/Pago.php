@@ -17,7 +17,7 @@ class Pago extends Model
 
     public function registro()
     {
-        return $this->belongsTo(Registro::class);
+        return $this->belongsTo(Registro::class, 'registro_id');
     }
     
     public function concepto()
@@ -45,8 +45,9 @@ class Pago extends Model
     {
         $pdf = Pdf::loadView('pdf.ticket', [
             'data' => $this->toArray(),
+            'pago' => $this->load('registro')
         ]);
-        $pdf->setPaper([0, 0, 226.77, 600], 'portrait'); 
+        $pdf->setPaper([0, 0, 226.77, 500], 'portrait'); 
         $fileName = $this->uuid . '.pdf';
 
         \Illuminate\Support\Facades\Storage::disk('local')->put('tickets/' . $fileName, $pdf->output());
@@ -66,5 +67,11 @@ class Pago extends Model
                 $pago->uuid = (string) \Illuminate\Support\Str::uuid();
             }
         });
+    }
+
+    public function getFolioAttribute()
+    {
+        $idFormateado = str_pad($this->id ?? 0, 4, '0', STR_PAD_LEFT);
+        return config('pago.folio') . $idFormateado;
     }
 }
