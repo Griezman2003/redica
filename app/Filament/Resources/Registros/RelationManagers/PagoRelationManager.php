@@ -38,48 +38,39 @@ class PagoRelationManager extends RelationManager
                 Select::make('mes')
                 ->label('Meses pagados')
                 ->multiple()
-                ->options([
-                    'enero' => 'Enero',
-                    'febrero' => 'Febrero',
-                    'marzo' => 'Marzo',
-                    'abril' => 'Abril',
-                    'mayo' => 'Mayo',
-                    'junio' => 'Junio',
-                    'julio' => 'Julio',
-                    'agosto' => 'Agosto',
-                    'septiembre' => 'Septiembre',
-                    'octubre' => 'Octubre',
-                    'noviembre' => 'Noviembre',
-                    'diciembre' => 'Diciembre',
-                ])
+                ->options( \App\Helpers\Mes::list())
                 ->searchable()
                 ->preload()
-                ->columnSpanFull(),
+                ->columnSpanFull()
+                ->default(['enero']),
                 \Filament\Schemas\Components\Section::make('Pendiente Pago')
                 ->description('Seccion de pagos pendientes')
                 ->schema([
-                    \Filament\Forms\Components\Toggle::make('pendiente')
-                        ->label('Pendiente')
-                        ->default(false)
-                        ->reactive(), 
-                        Select::make('mes_pago')
-                        ->label('Mes Pendiente')
-                        ->options([
-                            'enero' => 'Enero',
-                            'febrero' => 'Febrero',
-                            'marzo' => 'Marzo',
-                            'abril' => 'Abril',
-                            'mayo' => 'Mayo',
-                            'junio' => 'Junio',
-                            'julio' => 'Julio',
-                            'agosto' => 'Agosto',
-                            'septiembre' => 'Septiembre',
-                            'octubre' => 'Octubre',
-                            'noviembre' => 'Noviembre',
-                            'diciembre' => 'Diciembre',
-                        ])
-                        ->visible(fn ($get) => $get('pendiente'))
-                        ->columnSpanFull(),
+                \Filament\Forms\Components\Toggle::make('mes_pendiente')
+                ->label('Mes Pendiente')
+                ->reactive()
+                ->afterStateHydrated(function ($component, $state, $record) {
+                    if ($record) {
+                        $component->state(!empty($record->pendiente));
+                    } else {
+                        $component->state(false);
+                    }
+                }),
+
+                Select::make('pendiente')
+                    ->label('Mes Pendiente')
+                    ->multiple()
+                    ->options(\App\Helpers\Mes::list())
+                    ->visible(fn ($get) => $get('mes_pendiente'))
+                    ->columnSpanFull()
+                    ->searchable()
+                    ->afterStateHydrated(function ($component, $state, $record) {
+                        if ($record) {
+                            $component->state(is_array($record->pendiente) ? $record->pendiente : []);
+                        } else {
+                            $component->state(['Enero']);
+                        }
+                    }),
                 ])
                 ->columnSpanFull()
                 ->columns(2)
@@ -96,13 +87,18 @@ class PagoRelationManager extends RelationManager
                 TextColumn::make('monto')
                 ->label('Monto')
                 ->money('MXN')
-                ->searchable(),
+                ->searchable()
+                ->badge(),
                 TextColumn::make('concepto.nombre')
                 ->label('Concepto')
                 ->searchable(),
-                \Filament\Tables\Columns\TagsColumn::make('mes')
-                ->label('mes')
-                ->searchable(),
+                TextColumn::make('mes')
+                ->label('Meses pagados')
+                ->searchable()
+                ->badge(),
+                TextColumn::make('pendiente')
+                ->label('Mes Pendiente')
+                ->badge(),
                 TextColumn::make('uuid')
                 ->label('Uuid')
                 ->toggleable(isToggledHiddenByDefault: true),

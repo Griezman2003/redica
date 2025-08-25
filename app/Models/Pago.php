@@ -12,6 +12,7 @@ class Pago extends Model
 
     protected $casts = [
     'mes' => 'array',
+    'pendiente' => 'array',
     ];
 
     public function registro()
@@ -32,6 +33,8 @@ class Pago extends Model
      */
     public function pdf(): string
     {
+        $this->generarPdf($this->toArray());
+        
         if (!\Illuminate\Support\Facades\Storage::disk('local')->exists("tickets/{$this->uuid}.pdf")) {
             $this->generarPdf($this->toArray());
         }

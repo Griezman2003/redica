@@ -28,6 +28,7 @@ class RegistroExport implements FromCollection , WithHeadings, WithMapping
             'monto',
             'mes de pago',
             'uuid',
+            'mes pendiente',
             'creado el',
             'actualizado el'
         ];
@@ -46,6 +47,7 @@ class RegistroExport implements FromCollection , WithHeadings, WithMapping
             '$' . number_format($pago->monto, 2),
             $pago->mes,
             $pago->uuid,
+            $pago->pendiente,
             $pago->created_at->format('d/m/Y H:i'),
             $pago->updated_at->format('d/m/Y H:i'),
         ];
