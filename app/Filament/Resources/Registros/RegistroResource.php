@@ -19,7 +19,6 @@ use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Malzariey\FilamentDaterangepickerFilter\Fields\DateRangePicker;
 
 
 class RegistroResource extends Resource
