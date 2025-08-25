@@ -27,10 +27,6 @@ class PagoRelationManager extends RelationManager
     {
         return $schema
             ->components([
-                TextInput::make('uuid')
-                    ->default(\Illuminate\Support\Str::uuid()->toString())
-                    ->dehydrated(true)
-                    ->hidden(),
                 TextInput::make('monto')
                 ->label('Monto')
                 ->numeric()
