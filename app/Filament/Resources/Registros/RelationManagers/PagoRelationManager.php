@@ -94,9 +94,8 @@ class PagoRelationManager extends RelationManager
                 TextColumn::make('concepto.nombre')
                 ->label('Concepto')
                 ->searchable(),
-                TextColumn::make('mes')
+                TextColumn::make('meses')
                 ->label('Meses pagados')
-                ->searchable()
                 ->badge(),
                 /*
                 TextColumn::make('pendiente')
@@ -112,10 +111,10 @@ class PagoRelationManager extends RelationManager
                 ->label('Uuid')
                 ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
-                ->dateTime('d/m/Y H:i')
+                ->dateTime('d/m/Y')
                 ->label('Creado')
                 ->sortable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('updated_at')
                 ->dateTime('d/m/Y H:i')
                 ->label('Actualizado')

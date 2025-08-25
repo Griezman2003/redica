@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('pagos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("registro_id")->constrained();
+            $table->foreignId("registro_id")->constrained()->onDelete('cascade');
             $table->foreignId("concepto_id")->constrained();
             $table->decimal('monto', 12, 2);
             $table->string('uuid')->unique();

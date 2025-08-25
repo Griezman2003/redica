@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('registros', function (Blueprint $table) {
             $table->id();
-            $table->foreignId("user_id")->constrained();
+            $table->foreignId("user_id")->constrained()->onDelete('cascade');
             $table->string('nombre')->unique();
             $table->boolean('estado')->default(true);
             $table->timestamps();

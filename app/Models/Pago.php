@@ -12,7 +12,6 @@ class Pago extends Model
 
     protected $casts = [
     'mes' => 'array',
-    'pendiente' => 'array',
     ];
 
     public function registro()
@@ -69,9 +68,35 @@ class Pago extends Model
         });
     }
 
+    /**
+     * Generar folio con un condigurador y el id del pago
+     *
+     * @return void
+     */
     public function getFolioAttribute()
     {
         $idFormateado = str_pad($this->id ?? 0, 4, '0', STR_PAD_LEFT);
         return config('pago.folio') . $idFormateado;
     }
+
+    /**
+     * Generar una lista de meses a partir del array almacenado en la base de datos
+     *
+     * @return void
+     */
+    public function getMesesAttribute()
+    {
+        $meses = $this->mes;
+        if (!$meses || !is_array($meses) || empty($meses)) {
+            return '-';
+        }
+        $cantidad = count($meses);
+        if (in_array($cantidad, [7,8,9, 10, 11, 12])) {
+            return $cantidad === 12 ? '1 año' : "$cantidad meses";
+        }
+        return implode(', ', $meses);
+    }
+
+
+
 }

@@ -26,7 +26,7 @@
 
     <div style="text-align: left; margin: 0 5px;">
         <p style="margin: 2px 0;"><strong>Cliente:</strong> {{ $pago->registro->nombre ?? 'N/A' }}</p>
-        <p style="margin: 2px 0;"><strong>Mes de pago:</strong> {{ is_array($data['mes']) ? implode(', ', $data['mes']) : 'N/A' }}</p>
+        <p style="margin: 2px 0;"><strong>Mes pagado:</strong> {{ is_array($data['mes']) ? implode(', ', $data['mes']) : 'N/A' }}</p>
         <p style="margin: 2px 0;"><strong>Monto:</strong> ${{ number_format($data['monto'] ?? 0, 2) }}</p>
         <p style="margin: 2px 0;"><strong>Concepto de pago:</strong> {{ $pago->concepto->nombre}}</p>
         {{-- <p style="margin: 2px 0;">
