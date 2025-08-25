@@ -34,13 +34,16 @@ class Pago extends Model
         return \Illuminate\Support\Facades\Storage::disk('local')->get("tickets/{$this->uuid}.pdf");
     }
 
-    public static function generarPdf($data): string
+    public function generarPdf(): string
     {
         $pdf = Pdf::loadView('pdf.ticket', [
-            'data' => $data,
+            'data' => $this->toArray(),
         ]);
-        $fileName = $data['uuid']. '.pdf';
+        $pdf->setPaper([0, 0, 226.77, 600], 'portrait'); 
+        $fileName = $this->uuid . '.pdf';
+
         \Illuminate\Support\Facades\Storage::disk('local')->put('tickets/' . $fileName, $pdf->output());
+
         return 'tickets/' . $fileName;
     }
 
