@@ -10,6 +10,10 @@ class Pago extends Model
 {
     protected $fillable = ['concepto_id', 'registro_id', 'nombre', 'monto', 'uuid', 'mes','pendiente'];
 
+    protected $casts = [
+    'mes' => 'array',
+    ];
+
     public function registro()
     {
         return $this->belongsTo(Registro::class);
@@ -60,5 +64,4 @@ class Pago extends Model
             }
         });
     }
-
 }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId("concepto_id")->constrained();
             $table->decimal('monto', 12, 2);
             $table->string('uuid')->unique();
-            $table->string('mes');
+            $table->json('mes');
             $table->string('pendiente')->nullable();
             $table->timestamps();
         });

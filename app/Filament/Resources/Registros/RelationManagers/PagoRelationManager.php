@@ -35,9 +35,25 @@ class PagoRelationManager extends RelationManager
                 ->label('Concepto')
                 ->relationship('concepto', 'nombre')
                 ->required(),
-                \Malzariey\FilamentDaterangepickerFilter\Fields\DateRangePicker::make('mes')
-                ->label('Pago respecto a ese mes')
-                ->icon('heroicons-backspace')
+                Select::make('mes')
+                ->label('Meses pagados')
+                ->multiple()
+                ->options([
+                    'enero' => 'Enero',
+                    'febrero' => 'Febrero',
+                    'marzo' => 'Marzo',
+                    'abril' => 'Abril',
+                    'mayo' => 'Mayo',
+                    'junio' => 'Junio',
+                    'julio' => 'Julio',
+                    'agosto' => 'Agosto',
+                    'septiembre' => 'Septiembre',
+                    'octubre' => 'Octubre',
+                    'noviembre' => 'Noviembre',
+                    'diciembre' => 'Diciembre',
+                ])
+                ->searchable()
+                ->preload()
                 ->columnSpanFull(),
                 \Filament\Schemas\Components\Section::make('Pendiente Pago')
                 ->description('Seccion de pagos pendientes')
@@ -84,22 +100,22 @@ class PagoRelationManager extends RelationManager
                 TextColumn::make('concepto.nombre')
                 ->label('Concepto')
                 ->searchable(),
-                TextColumn::make('mes')
-                    ->label('Mes de Pago')
-                    ->sortable(),
+                \Filament\Tables\Columns\TagsColumn::make('mes')
+                ->label('mes')
+                ->searchable(),
                 TextColumn::make('uuid')
-                    ->label('Uuid')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                ->label('Uuid')
+                ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
-                    ->dateTime('d/m/Y H:i')
-                    ->label('Creado')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                ->dateTime('d/m/Y H:i')
+                ->label('Creado')
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('updated_at')
-                    ->dateTime('d/m/Y H:i')
-                    ->label('Actualizado')
-                    ->sortable()
-                    ->toggleable(isToggledHiddenByDefault: true),
+                ->dateTime('d/m/Y H:i')
+                ->label('Actualizado')
+                ->sortable()
+                ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
                 //
