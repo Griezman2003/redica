@@ -15,13 +15,14 @@ class PagoOverview extends StatsOverviewWidget
 
     protected function getStats(): array
     {
+        
         $pagosHoy = Pago::whereDate('created_at', Carbon::today())->count();
-        $pagosMes = Pago::whereYear('created_at', Carbon::now()->year)
-                        ->whereMonth('created_at', Carbon::now()->month)
-                        ->count();
 
-    
-        $totalPagos = Pago::sum('monto'); 
+        $montoPagosMes = Pago::whereYear('created_at', Carbon::now()->year)
+                    ->whereMonth('created_at', Carbon::now()->month)
+                    ->sum('monto');
+
+        $totalPagos = Pago::whereYear('created_at', Carbon::now()->year)->sum('monto');
 
         $horasHoy = collect(range(0, 23));
         $pagosPorHora = $horasHoy->map(function ($h) {
@@ -30,12 +31,13 @@ class PagoOverview extends StatsOverviewWidget
                     ->count();
         });
 
+
         $diasDelMes = collect(range(1, Carbon::now()->daysInMonth));
-        $pagosPorDia = $diasDelMes->map(function ($d) {
+        $montoPorDia = $diasDelMes->map(function ($d) {
             return Pago::whereDay('created_at', $d)
                     ->whereMonth('created_at', Carbon::now()->month)
                     ->whereYear('created_at', Carbon::now()->year)
-                    ->count();
+                    ->sum('monto');
         });
 
         $meses = collect(range(1, 12));
@@ -52,11 +54,11 @@ class PagoOverview extends StatsOverviewWidget
                 ->icon('heroicon-o-calendar')
                 ->chart(array_values($pagosPorHora->toArray())),
 
-            Stat::make('Pagos Este Mes', $pagosMes)
-                ->description($pagosMes . ' pagos')
+            Stat::make('Monto Este Mes', $montoPagosMes)
+                ->description('$' . number_format($montoPagosMes, 2))
                 ->color('primary')
                 ->icon('heroicon-o-calendar-days')
-                ->chart(array_values($pagosPorDia->toArray())),
+                ->chart(array_values($montoPorDia->toArray())),
 
             Stat::make('Total Pagos', $totalPagos)
                 ->description('$' . number_format($totalPagos, 2))
