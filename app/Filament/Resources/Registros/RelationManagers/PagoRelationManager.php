@@ -42,6 +42,7 @@ class PagoRelationManager extends RelationManager
                 ->searchable()
                 ->preload()
                 ->columnSpanFull()
+                ->required()
                 ->default(['enero']),
                 /*
                 \Filament\Schemas\Components\Section::make('Pendiente Pago')
@@ -158,7 +159,9 @@ class PagoRelationManager extends RelationManager
             ->toolbarActions([
                 BulkAction::make('Exportar a Excel')
                     ->action(function ($records) {
-                        $export = new \App\Exports\RegistroExport();
+                        $export = new \App\Exports\RegistroExport(
+                            $records->pluck('id')->toArray()
+                        );
                         return \Maatwebsite\Excel\Facades\Excel::download($export, 'redIca.xlsx');
                     })
                 ->color('success'),

@@ -7,47 +7,55 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class RegistroExport implements FromCollection , WithHeadings, WithMapping
+class RegistroExport implements FromCollection, WithHeadings, WithMapping
 {
+    protected $ids;
+
     /**
-    * @return \Illuminate\Support\Collection
-    */
+     * Recibe los IDs de pagos seleccionados
+     */
+    public function __construct(array $ids)
+    {
+        $this->ids = $ids;
+    }
+
+    /**
+     * Retorna solo los pagos seleccionados con sus relaciones
+     */
     public function collection()
     {
-        return Pago::with('registro')->get();
+        return Pago::with(['registro', 'concepto'])
+            ->whereIn('id', $this->ids)
+            ->get();
     }
+
     /**
-     * se especifica el nombre de los emcabezados del excel
-     *
-     * @return array
+     * Encabezados del Excel
      */
     public function headings(): array
     {
         return [
-            'nombre',
-            'monto',
-            'mes de pago',
-            'uuid',
-            'mes pendiente',
-            'creado el',
-            'actualizado el'
+            'Nombre',
+            'Monto',
+            'Mes de pago',
+            'UUID',
+            'Concepto',
+            'Creado el',
+            'Actualizado el'
         ];
     }
 
     /**
-     * se encargar de poner los encabezados
-     *
-     * @param [type] $registro
-     * @return array
+     * Mapear cada fila del Excel
      */
     public function map($pago): array
     {
         return [
-            $pago->registro->nombre,
+            $pago->registro->nombre ?? 'N/A',
             '$' . number_format($pago->monto, 2),
-            $pago->mes,
+            is_array($pago->mes) ? implode(', ', $pago->mes) : $pago->mes,
             $pago->uuid,
-            $pago->pendiente,
+            $pago->concepto->nombre ?? 'N/A',
             $pago->created_at->format('d/m/Y H:i'),
             $pago->updated_at->format('d/m/Y H:i'),
         ];
