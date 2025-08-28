@@ -19,24 +19,47 @@ class ClienteOverview extends ChartWidget
         return 'line';
     }
 
+    /**
+     * Metodo que filtra los años del cliente
+     *
+     * @return array
+     */
+    protected function getFilters(): array
+    {
+        $anios = Cliente::selectRaw('YEAR(created_at) as year')
+            ->distinct()
+            ->orderBy('year', 'desc')
+            ->pluck('year')
+            ->mapWithKeys(fn ($year) => [(string) $year => (string) $year])
+            ->toArray();
+
+        return $anios;
+    }
+
     protected function getData(): array
     {
+        $anio = $this->filter ?? Carbon::now()->year;
+
         $meses = collect(range(1, 12));
-        $registrosPorMes = $meses->map(function ($m) {
+
+        $registrosPorMes = $meses->map(function ($m) use ($anio) {
             return Cliente::whereMonth('created_at', $m)
-                        ->whereYear('created_at', Carbon::now()->year)
+                        ->whereYear('created_at', $anio)
                         ->count();
         });
 
         return [
             'datasets' => [
                 [
-                    'label' => 'Registros',
+                    'label' => "Registros $anio",
                     'data' => $registrosPorMes->values()->toArray(),
                     'fill' => 'start',
                 ],
             ],
-            'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            'labels' => [
+                'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+            ],
         ];
     }
 }
