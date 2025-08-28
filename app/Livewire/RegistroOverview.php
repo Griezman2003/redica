@@ -8,9 +8,16 @@ use Carbon\Carbon;
 
 class RegistroOverview extends ChartWidget
 {
-    protected ?string $heading = 'Registros del sistema';
-
+    protected ?string $heading = 'Registros por mes';
+    
+    protected static ?int $sort = 1;
+    
     protected array|string|int $columnSpan = 2;
+
+    protected function getType(): string
+    {
+        return 'line';
+    }
 
     protected function getData(): array
     {
@@ -21,26 +28,15 @@ class RegistroOverview extends ChartWidget
                         ->count();
         });
 
-        // Nombres de los meses en español
-        $mesesNombre = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-
         return [
-            'labels' => $mesesNombre,
             'datasets' => [
                 [
-                    'label' => 'Registros por mes',
-                    'data' => array_values($registrosPorMes->toArray()),
-                    'backgroundColor' => 'rgba(54, 162, 235, 0.2)',
-                    'borderColor' => 'rgba(54, 162, 235, 1)',
-                    'borderWidth' => 2,
-                    'fill' => true,
+                    'label' => 'Registros',
+                    'data' => $registrosPorMes->values()->toArray(),
+                    'fill' => 'start',
                 ],
             ],
+            'labels' => ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
         ];
-    }
-
-    protected function getType(): string
-    {
-        return 'line';
     }
 }

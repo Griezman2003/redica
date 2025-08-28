@@ -37,11 +37,10 @@ class AppPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
-            ->widgets([
-                //AccountWidget::class,
-                //FilamentInfoWidget::class,
+            ->widgets([ 
                 \App\Livewire\PagoOverview::class,
                 \App\Livewire\RegistroOverview::class,
+                \App\Livewire\PagosTable::class,
             ])
             ->middleware([
                 EncryptCookies::class,
