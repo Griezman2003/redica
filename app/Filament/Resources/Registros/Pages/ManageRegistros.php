@@ -3,7 +3,7 @@
 namespace App\Filament\Resources\Registros\Pages;
 
 use App\Filament\Resources\Registros\RegistroResource;
-use Filament\Actions\CreateAction;
+use Filament\Actions;
 use Filament\Resources\Pages\ManageRecords;
 
 class ManageRegistros extends ManageRecords
@@ -13,7 +13,11 @@ class ManageRegistros extends ManageRecords
     protected function getHeaderActions(): array
     {
         return [
-            CreateAction::make(),
+            Actions\CreateAction::make()->createAnother(false)
+            ->using(function (array $data) {
+                $data['user_id'] = \Illuminate\Support\Facades\Auth::id();
+                return static::getResource()::getModel()::create($data);
+            }),  
         ];
     }
 }
