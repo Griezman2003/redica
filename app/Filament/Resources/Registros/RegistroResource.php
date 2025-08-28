@@ -37,6 +37,11 @@ class RegistroResource extends Resource
                 ->label('Nombre')
                 ->required()
                 ->maxLength(255),
+                Select::make('colonia')
+                ->options(\App\Helpers\Colonias::colonia())
+                ->searchable()
+                ->label('Colonia')
+                ->required(),
                 \Filament\Forms\Components\Toggle::make('estado')
                 ->label('Activo')
                 ->default(true),

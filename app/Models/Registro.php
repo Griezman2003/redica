@@ -7,7 +7,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class Registro extends Model
 {
-    protected $fillable = ['user_id', 'nombre', 'estado'];
+    protected $fillable = ['user_id', 'nombre', 'colonia', 'estado'];
 
     public function concepto()
     {

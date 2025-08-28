@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId("user_id")->constrained()->onDelete('cascade');
             $table->string('nombre')->unique();
+            $table->string('colonia');
             $table->boolean('estado')->default(true);
             $table->timestamps();
         });
