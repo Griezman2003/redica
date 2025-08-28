@@ -10,7 +10,9 @@ use Filament\Widgets\TableWidget as BaseWidget;
 class PagosTable extends BaseWidget
 {
     protected array|string|int $columnSpan = 2;
+
     protected static ?int $sort = 2;
+    
     protected static ?string $heading = 'Pagos generales de los clientes';
 
     public function table(Table $table): Table
