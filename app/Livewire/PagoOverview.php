@@ -13,6 +13,8 @@ class PagoOverview extends StatsOverviewWidget
 
     protected array|string|int $columnSpan = 2;
 
+    protected static ?int $sort = 1;
+
     protected function getStats(): array
     {
         

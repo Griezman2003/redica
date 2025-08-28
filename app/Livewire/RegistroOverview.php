@@ -10,7 +10,7 @@ class RegistroOverview extends ChartWidget
 {
     protected ?string $heading = 'Registros por mes';
     
-    protected static ?int $sort = 1;
+    protected static ?int $sort = 3;
     
     protected array|string|int $columnSpan = 2;
 
