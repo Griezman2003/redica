@@ -8,7 +8,7 @@ use Carbon\Carbon;
 
 class RegistroOverview extends ChartWidget
 {
-    protected ?string $heading = 'Registros por mes';
+    protected ?string $heading = 'Registros de clientes por mes';
     
     protected static ?int $sort = 3;
     
