@@ -8,15 +8,15 @@ use Barryvdh\DomPDF\Facade\Pdf;
 
 class Pago extends Model
 {
-    protected $fillable = ['concepto_id', 'registro_id', 'nombre', 'monto', 'uuid', 'mes','pendiente'];
+    protected $fillable = ['concepto_id', 'cliente_id', 'nombre', 'monto', 'uuid', 'mes','pendiente'];
 
     protected $casts = [
     'mes' => 'array',
     ];
 
-    public function registro()
+    public function cliente()
     {
-        return $this->belongsTo(Registro::class, 'registro_id');
+        return $this->belongsTo(Cliente::class);
     }
     
     public function concepto()
@@ -44,7 +44,7 @@ class Pago extends Model
     {
         $pdf = Pdf::loadView('pdf.ticket', [
             'data' => $this->toArray(),
-            'pago' => $this->load('registro')
+            'pago' => $this->load('cliente')
         ]);
         $pdf->setPaper([0, 0, 226.77, 500], 'portrait'); 
         $fileName = $this->uuid . '.pdf';

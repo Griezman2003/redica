@@ -8,9 +8,9 @@ class Concepto extends Model
 {
     protected $fillable = ['nombre', 'descripcion', 'atributos'];
 
-    public function registros()
+    public function cliente()
     {
-        return $this->hasMany(Registro::class);
+        return $this->hasMany(Cliente::class);
     }
 
     public function pago()

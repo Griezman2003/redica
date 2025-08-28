@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\Registros\RelationManagers;
+namespace App\Filament\Resources\Clientes\RelationManagers;
 
 use Filament\Actions\AssociateAction;
 use Filament\Actions\BulkActionGroup;
@@ -44,39 +44,7 @@ class PagoRelationManager extends RelationManager
                 ->columnSpanFull()
                 ->required()
                 ->default(['enero']),
-                /*
-                \Filament\Schemas\Components\Section::make('Pendiente Pago')
-                ->description('Seccion de pagos pendientes')
-                ->schema([
-                \Filament\Forms\Components\Toggle::make('mes_pendiente')
-                ->label('Mes Pendiente')
-                ->reactive()
-                ->afterStateHydrated(function ($component, $state, $record) {
-                    if ($record) {
-                        $component->state(!empty($record->pendiente));
-                    } else {
-                        $component->state(false);
-                    }
-                }),
-
-                Select::make('pendiente')
-                    ->label('Mes Pendiente')
-                    ->multiple()
-                    ->options(\App\Helpers\Mes::list())
-                    ->visible(fn ($get) => $get('mes_pendiente'))
-                    ->columnSpanFull()
-                    ->searchable()
-                    ->afterStateHydrated(function ($component, $state, $record) {
-                        if ($record) {
-                            $component->state(is_array($record->pendiente) ? $record->pendiente : []);
-                        } else {
-                            $component->state(['Enero']);
-                        }
-                    }),
-                    */
                 ]);
-                // ->columnSpanFull()
-                // ->columns(2)
     }
 
     public function table(Table $table): Table
@@ -87,7 +55,7 @@ class PagoRelationManager extends RelationManager
                 ->label('Folio')
                 ->searchable()
                 ->toggleable(isToggledHiddenByDefault: true),
-                TextColumn::make('registro.nombre')
+                TextColumn::make('cliente.nombre')
                 ->label('Nombre')
                 ->searchable()
                 ->toggleable(isToggledHiddenByDefault: false),

@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Filament\Resources\Registros;
+namespace App\Filament\Resources\Clientes;
 
-use App\Filament\Resources\Registros\Pages\ManageRegistros;
-use App\Filament\Resources\Registros\RelationManagers;
-use App\Models\Registro;
+use App\Filament\Resources\Clientes\Pages\ManageCliente;
+use App\Filament\Resources\Clientes\RelationManagers;
+use App\Models\Cliente;
 use BackedEnum;
 use Dom\Text;
 use Filament\Actions\BulkActionGroup;
@@ -21,13 +21,13 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
 
-class RegistroResource extends Resource
+class ClienteResource extends Resource
 {
-    protected static ?string $model = Registro::class;
+    protected static ?string $model = Cliente::class;
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::ClipboardDocumentList;
 
-    protected static ?string $recordTitleAttribute = 'Registro';
+    protected static ?string $recordTitleAttribute = 'Cliente';
 
     public static function form(Schema $schema): Schema
     {
@@ -86,8 +86,8 @@ class RegistroResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ManageRegistros::route('/'),
-            "edit" => Pages\EditRegistro::route("/{record}/edit"),
+            'index' => ManageCliente::route('/'),
+            "edit" => Pages\EditCliente::route("/{record}/edit"),
         ];
     }
 }

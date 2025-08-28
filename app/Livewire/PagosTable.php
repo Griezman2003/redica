@@ -3,7 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Pago;
-use App\Filament\Resources\Registros\RelationManagers\PagoRelationManager;
+use App\Filament\Resources\Clientes\RelationManagers\PagoRelationManager;
 use Filament\Tables\Table;
 use Filament\Widgets\TableWidget as BaseWidget;
 

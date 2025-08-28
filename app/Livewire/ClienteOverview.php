@@ -3,10 +3,10 @@
 namespace App\Livewire;
 
 use Filament\Widgets\ChartWidget;
-use App\Models\Registro;
+use App\Models\Cliente;
 use Carbon\Carbon;
 
-class RegistroOverview extends ChartWidget
+class ClienteOverview extends ChartWidget
 {
     protected ?string $heading = 'Registros de clientes por mes';
     
@@ -23,7 +23,7 @@ class RegistroOverview extends ChartWidget
     {
         $meses = collect(range(1, 12));
         $registrosPorMes = $meses->map(function ($m) {
-            return Registro::whereMonth('created_at', $m)
+            return Cliente::whereMonth('created_at', $m)
                         ->whereYear('created_at', Carbon::now()->year)
                         ->count();
         });

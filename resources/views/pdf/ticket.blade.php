@@ -25,7 +25,7 @@
     <hr style="border: 0; border-top: 1px dashed #000; margin: 5px 0;">
 
     <div style="text-align: left; margin: 0 5px;">
-        <p style="margin: 2px 0;"><strong>Cliente:</strong> {{ $pago->registro->nombre ?? 'N/A' }}</p>
+        <p style="margin: 2px 0;"><strong>Cliente:</strong> {{ $pago->cliente->nombre ?? 'N/A' }}</p>
         <p style="margin: 2px 0;"><strong>Mes pagado:</strong> {{ is_array($data['mes']) ? implode(', ', $data['mes']) : 'N/A' }}</p>
         <p style="margin: 2px 0;"><strong>Monto:</strong> ${{ number_format($data['monto'] ?? 0, 2) }}</p>
         <p style="margin: 2px 0;"><strong>Concepto de pago:</strong> {{ $pago->concepto->nombre}}</p>
@@ -43,7 +43,7 @@
     <hr style="border: 0; border-top: 1px dashed #000; margin: 5px 0;">
 
     <p style="margin: 2px 0; font-size: 11px; text-align: center;">
-        Hola {{ $pago->registro->nombre}} gracias por su pago y por su preferencia en nuestro servicio.
+        Hola {{ $pago->cliente->nombre}} gracias por su pago y por su preferencia en nuestro servicio.
     </p>
 
     <hr style="border: 0; border-top: 1px dashed #000; margin: 5px 0;">

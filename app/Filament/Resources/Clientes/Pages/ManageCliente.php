@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Filament\Resources\Registros\Pages;
+namespace App\Filament\Resources\Clientes\Pages;
 
-use App\Filament\Resources\Registros\RegistroResource;
+use App\Filament\Resources\Clientes\ClienteResource;
 use Filament\Actions;
 use Filament\Resources\Pages\ManageRecords;
 
-class ManageRegistros extends ManageRecords
+class ManageCliente extends ManageRecords
 {
-    protected static string $resource = RegistroResource::class;
+    protected static string $resource = ClienteResource::class;
 
     protected function getHeaderActions(): array
     {

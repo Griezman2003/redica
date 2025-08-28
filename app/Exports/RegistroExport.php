@@ -24,7 +24,7 @@ class RegistroExport implements FromCollection, WithHeadings, WithMapping
      */
     public function collection()
     {
-        return Pago::with(['registro', 'concepto'])
+        return Pago::with(['cliente', 'concepto'])
             ->whereIn('id', $this->ids)
             ->get();
     }
@@ -52,10 +52,10 @@ class RegistroExport implements FromCollection, WithHeadings, WithMapping
     public function map($pago): array
     {
         return [
-            $pago->registro->nombre ?? 'N/A',
+            $pago->cliente->nombre ?? 'N/A',
             '$' . number_format($pago->monto, 2),
             is_array($pago->mes) ? implode(', ', $pago->mes) : $pago->mes,
-            $pago->registro->colonia ?? 'Sin colonia',
+            $pago->cliente->colonia ?? 'Sin colonia',
             $pago->folio,
             $pago->concepto->nombre ?? 'N/A',
             $pago->created_at->format('d/m/Y H:i'),

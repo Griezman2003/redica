@@ -46,8 +46,8 @@ class User extends Authenticatable
         ];
     }
 
-    public function registro()
+    public function cliente()
     {
-        return $this->hasMany(Registro::class);
+        return $this->hasMany(Cliente::class);
     }
 }

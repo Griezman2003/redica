@@ -40,7 +40,7 @@ class AppPanelProvider extends PanelProvider
             ->widgets([ 
                 \App\Livewire\PagoOverview::class,
                 \App\Livewire\PagosTable::class,
-                \App\Livewire\RegistroOverview::class,
+                \App\Livewire\ClienteOverview::class,
             ])
             ->middleware([
                 EncryptCookies::class,
