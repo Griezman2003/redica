@@ -89,7 +89,8 @@ class PagoRelationManager extends RelationManager
                 ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('registro.nombre')
                 ->label('Nombre')
-                ->searchable(),
+                ->searchable()
+                ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('monto')
                 ->label('Monto')
                 ->money('MXN')
