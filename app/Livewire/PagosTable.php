@@ -12,9 +12,15 @@ class PagosTable extends BaseWidget
     protected array|string|int $columnSpan = 2;
 
     protected static ?int $sort = 2;
-    
+
     protected static ?string $heading = 'Pagos generales de los clientes';
 
+    /**
+     * Aqui heredamos la tabla del RelationManager de Pagos
+     *
+     * @param Table $table
+     * @return Table
+     */
     public function table(Table $table): Table
     {                
         $tabla = new PagoRelationManager()->table($table);
