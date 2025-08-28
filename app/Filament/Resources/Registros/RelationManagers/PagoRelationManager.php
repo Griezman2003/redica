@@ -131,6 +131,7 @@ class PagoRelationManager extends RelationManager
             ])
             ->headerActions([
             CreateAction::make()
+            ->createAnother(false)
             ->after(function ($record) {
                 $record->generarPdf();
             }),
