@@ -88,7 +88,6 @@ class RegistroResource extends Resource
         return [
             'index' => ManageRegistros::route('/'),
             "edit" => Pages\EditRegistro::route("/{record}/edit"),
-            "create" => Pages\createRegistro::route("/create"),
         ];
     }
 }
