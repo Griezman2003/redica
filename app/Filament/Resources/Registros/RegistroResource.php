@@ -55,6 +55,8 @@ class RegistroResource extends Resource
                 TextColumn::make('nombre')
                 ->label('Nombre')
                 ->searchable(),
+                TextColumn::make('colonia')
+                ->label('Colonia'),
                 TextColumn::make('estado')
                 ->label('Estado')
                 ->getStateUsing(function ($record) {
