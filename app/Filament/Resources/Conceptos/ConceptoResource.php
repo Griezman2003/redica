@@ -56,14 +56,14 @@ class ConceptoResource extends Resource
                 TextColumn::make('descripcion')
                     ->label('Descripción')
                     ->searchable(),
-                \Filament\Tables\Columns\TagsColumn::make('atributos')
-                    ->label('Etiquetas'),
+                TextColumn::make('atributos')
+                    ->label('Etiquetas')
+                    ->badge(),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
-                EditAction::make(),
                 DeleteAction::make(),
             ]);
             // ->toolbarActions([
