@@ -54,11 +54,11 @@ class PagoRelationManager extends RelationManager
                 TextColumn::make('folio')
                 ->label('Folio')
                 ->searchable()
-                ->toggleable(isToggledHiddenByDefault: true),
+                ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('cliente.nombre')
                 ->label('Nombre')
                 ->searchable()
-                ->toggleable(isToggledHiddenByDefault: false),
+                ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('monto')
                 ->label('Monto')
                 ->money('MXN')
@@ -70,16 +70,6 @@ class PagoRelationManager extends RelationManager
                 TextColumn::make('meses')
                 ->label('Meses pagados')
                 ->badge(),
-                /*
-                TextColumn::make('pendiente')
-                ->label('Mes Pendiente')
-                ->badge()
-                ->formatStateUsing(fn ($state) => 
-                    str_word_count($state) > 5
-                        ? implode(', ', array_slice(explode(', ', $state), 0, 5)) . ' ...'
-                        : $state
-                ),
-                */
                 TextColumn::make('uuid')
                 ->label('Uuid')
                 ->toggleable(isToggledHiddenByDefault: true),
@@ -93,7 +83,7 @@ class PagoRelationManager extends RelationManager
                 ->label('Actualizado')
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: true),
-            ])
+            ]) 
             ->filters([
                 //
             ])
