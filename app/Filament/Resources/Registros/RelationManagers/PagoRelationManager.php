@@ -83,6 +83,10 @@ class PagoRelationManager extends RelationManager
     {
         return $table
             ->columns([
+                TextColumn::make('folio')
+                ->label('Folio')
+                ->searchable()
+                ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('registro.nombre')
                 ->label('Nombre')
                 ->searchable(),
