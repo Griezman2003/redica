@@ -117,7 +117,7 @@ class PagoRelationManager extends RelationManager
 
                 ])->button()
                 ->badge()
-                ->icon('heroicon-o-ellipsis-vertical')
+                ->icon('heroicon-o-cog')
             ])
             ->toolbarActions([
                 BulkAction::make('Exportar a Excel')
