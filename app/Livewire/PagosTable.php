@@ -23,8 +23,7 @@ class PagosTable extends BaseWidget
      */
     public function table(Table $table): Table
     {                
-        $tabla = new PagoRelationManager()->table($table);
-
+        $tabla = (new PagoRelationManager())->table($table);
         return $tabla->query(Pago::query())
         ->headerActions([])
         ->recordActions([]);
