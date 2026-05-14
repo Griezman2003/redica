@@ -17,6 +17,9 @@ return new class extends Migration
             $table->string('nombre')->unique();
             $table->string('colonia');
             $table->boolean('estado')->default(true);
+            $table->string('telefono')->nullable();
+            $table->string('calle')->nullable();
+
             $table->timestamps();
         });
     }

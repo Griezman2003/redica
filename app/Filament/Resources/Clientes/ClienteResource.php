@@ -6,11 +6,7 @@ use App\Filament\Resources\Clientes\Pages\ManageCliente;
 use App\Filament\Resources\Clientes\RelationManagers;
 use App\Models\Cliente;
 use BackedEnum;
-use Dom\Text;
-use Filament\Actions\BulkActionGroup;
-use Filament\Actions\BulkAction;
 use Filament\Actions\DeleteAction;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -42,6 +38,13 @@ class ClienteResource extends Resource
                 ->searchable()
                 ->label('Colonia')
                 ->required(),
+                TextInput::make('telefono')
+                ->label('Teléfono')
+                ->mask('999 999 99 99')
+                ->stripCharacters(' '),
+                TextInput::make('calle')
+                ->label('Calle')
+                ->nullable(),
                 \Filament\Forms\Components\Toggle::make('estado')
                 ->label('Activo')
                 ->default(true),
@@ -57,6 +60,10 @@ class ClienteResource extends Resource
                 ->searchable(),
                 TextColumn::make('colonia')
                 ->label('Colonia'),
+                TextColumn::make('telefono')
+                ->label('Teléfono'),
+                TextColumn::make('calle')
+                ->label('Calle'),
                 TextColumn::make('estado')
                 ->label('Estado')
                 ->getStateUsing(function ($record) {
@@ -73,6 +80,7 @@ class ClienteResource extends Resource
             ])
             ->recordActions([
                 DeleteAction::make(),
+                //EditAction::make(),
             ]);
     }
 
@@ -87,7 +95,8 @@ class ClienteResource extends Resource
     {
         return [
             'index' => ManageCliente::route('/'),
-            "edit" => Pages\EditCliente::route("/{record}/edit"),
+            'edit' => Pages\EditCliente::route("/{record}/edit"),
+            //'view' => Pages\ViewCliente::route('/{record}'),
         ];
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\widget;
 
 use Filament\Widgets\ChartWidget;
 use App\Models\Cliente;

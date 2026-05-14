@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class Cliente extends Model
 {
-    protected $fillable = ['user_id', 'nombre', 'colonia', 'estado'];
+    protected $fillable = ['user_id', 'nombre', 'colonia', 'estado', 'telefono', 'calle'];
 
     public function concepto()
     {

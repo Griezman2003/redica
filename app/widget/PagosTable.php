@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\widget;
 
 use App\Models\Pago;
 use App\Filament\Resources\Clientes\RelationManagers\PagoRelationManager;

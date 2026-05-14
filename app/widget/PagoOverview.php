@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire;
+namespace App\widget;
 
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;

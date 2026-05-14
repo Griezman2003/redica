@@ -32,21 +32,21 @@ class PagoRelationManager extends RelationManager
                 ->required(),
                 Select::make('concepto_id')
                 ->label('Concepto')
-                ->default(\App\Models\Concepto::query()->first()?->id)
                 ->relationship('concepto', 'nombre')
-                ->required(),
+                ->default(\App\Models\Concepto::query()->first()?->id)
+                ->disabled(! \App\Models\Concepto::exists())
+                ->required()
+                ->helperText(
+                    ! \App\Models\Concepto::exists()
+                        ? '⚠ Debes crear un concepto primero para habilitar este campo'
+                        : null
+                ),
                 TextInput::make('mes')
                 ->label('Mes Pediente')
                 ->default(fn ($record) =>\App\Models\Cliente::obtenerMesPendiente($this->ownerRecord))
                 ->disabled()
                 ->dehydrated()
                 ->columnSpanFull(),
-                // ->multiple()
-                // ->options( \App\Helpers\Mes::list())
-                // ->searchable()
-                // ->preload()
-                // ->required()
-                // ->default(['enero']),
                 ]);
     }
 
@@ -117,7 +117,6 @@ class PagoRelationManager extends RelationManager
                 ->modalSubmitAction(false),
                 EditAction::make(),
                 DeleteAction::make(),
-
                 ])->button()
                 ->badge()
                 ->icon('heroicon-o-cog')
@@ -132,6 +131,6 @@ class PagoRelationManager extends RelationManager
                     })
                 ->color('success'),
             ]);
-        
+            
     }
 }

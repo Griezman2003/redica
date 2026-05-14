@@ -38,9 +38,9 @@ class AppPanelProvider extends PanelProvider
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([ 
-                \App\Livewire\PagoOverview::class,
-                \App\Livewire\PagosTable::class,
-                \App\Livewire\ClienteOverview::class,
+                \App\widget\PagoOverview::class,
+                \App\widget\PagosTable::class,
+                \App\widget\ClienteOverview::class,
             ])
             ->middleware([
                 EncryptCookies::class,
