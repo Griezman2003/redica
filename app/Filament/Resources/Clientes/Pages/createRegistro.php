@@ -17,6 +17,6 @@ class createRegistro extends CreateRecord
 
     // protected function afterCreate(): void
     // {
-        
+
     // }
 }

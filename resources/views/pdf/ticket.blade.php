@@ -1,6 +1,7 @@
 @php
-    use Carbon\Carbon;
-    $fecha = Carbon::now()->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
+    // use Carbon\Carbon;
+    // $fecha = Carbon::now()->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
+    $fecha = $pago->created_at->locale('es')->isoFormat('D [de] MMMM [del] YYYY');
 @endphp
 <div style="display: flex; justify-content: space-between; align-items: center; font-family: sans-serif; font-size: 12px; margin-bottom: 1px;">
     <h5>Candelaria, Campeche a {{ $fecha }}</h5>
@@ -26,7 +27,7 @@
 
     <div style="text-align: left; margin: 0 5px;">
         <p style="margin: 2px 0;"><strong>Cliente:</strong> {{ $pago->cliente->nombre ?? 'N/A' }}</p>
-        <p style="margin: 2px 0;"><strong>Mes pagado:</strong> {{ is_array($data['mes']) ? implode(', ', $data['mes']) : 'N/A' }}</p>
+        <p style="margin: 2px 0;"><strong>Mes pagado:</strong> {{ $data['mes'] ?? 'N/A' }}</p>
         <p style="margin: 2px 0;"><strong>Monto:</strong> ${{ number_format($data['monto'] ?? 0, 2) }}</p>
         <p style="margin: 2px 0;"><strong>Concepto de pago:</strong> {{ $pago->concepto->nombre}}</p>
         {{-- <p style="margin: 2px 0;">

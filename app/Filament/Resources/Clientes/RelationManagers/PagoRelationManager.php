@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Clientes\RelationManagers;
 
+use App\Models\Pago;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -25,20 +26,27 @@ class PagoRelationManager extends RelationManager
                 TextInput::make('monto')
                 ->label('Monto')
                 ->numeric()
+                ->default(400)
+                ->disabled()
+                ->dehydrated()
                 ->required(),
                 Select::make('concepto_id')
                 ->label('Concepto')
+                ->default(\App\Models\Concepto::query()->first()?->id)
                 ->relationship('concepto', 'nombre')
                 ->required(),
-                Select::make('mes')
-                ->label('Meses pagados')
-                ->multiple()
-                ->options( \App\Helpers\Mes::list())
-                ->searchable()
-                ->preload()
-                ->columnSpanFull()
-                ->required()
-                ->default(['enero']),
+                TextInput::make('mes')
+                ->label('Mes Pediente')
+                ->default(fn ($record) =>\App\Models\Cliente::obtenerMesPendiente($this->ownerRecord))
+                ->disabled()
+                ->dehydrated()
+                ->columnSpanFull(),
+                // ->multiple()
+                // ->options( \App\Helpers\Mes::list())
+                // ->searchable()
+                // ->preload()
+                // ->required()
+                // ->default(['enero']),
                 ]);
     }
 
@@ -62,15 +70,15 @@ class PagoRelationManager extends RelationManager
                 TextColumn::make('concepto.nombre')
                 ->label('Concepto')
                 ->searchable(),
-                TextColumn::make('meses')
-                ->label('Meses pagados')
+                TextColumn::make('mes')
+                ->label('Mes Pagado')
                 ->badge(),
                 TextColumn::make('uuid')
                 ->label('Uuid')
                 ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('created_at')
                 ->dateTime('d/m/Y')
-                ->label('Creado')
+                ->label('Fecha De Pago')
                 ->sortable()
                 ->toggleable(isToggledHiddenByDefault: false),
                 TextColumn::make('updated_at')

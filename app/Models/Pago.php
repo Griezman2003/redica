@@ -3,16 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Barryvdh\DomPDF\Facade\Pdf;
-
 
 class Pago extends Model
 {
     protected $fillable = ['concepto_id', 'cliente_id', 'nombre', 'monto', 'uuid', 'mes','pendiente'];
 
-    protected $casts = [
-    'mes' => 'array',
-    ];
+    protected $casts = ['mes' => 'array',];
 
     public function cliente()
     {
@@ -32,17 +28,17 @@ class Pago extends Model
      */
     public function pdf(): string
     {
-        $this->generarPdf($this->toArray());
+        $this->generarPdf();
         
         if (!\Illuminate\Support\Facades\Storage::disk('local')->exists("tickets/{$this->uuid}.pdf")) {
-            $this->generarPdf($this->toArray());
+            $this->generarPdf();
         }
         return \Illuminate\Support\Facades\Storage::disk('local')->get("tickets/{$this->uuid}.pdf");
     }
 
     public function generarPdf(): string
     {
-        $pdf = Pdf::loadView('pdf.ticket', [
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('pdf.ticket', [
             'data' => $this->toArray(),
             'pago' => $this->load('cliente')
         ]);
@@ -96,7 +92,4 @@ class Pago extends Model
         }
         return implode(', ', $meses);
     }
-
-
-
 }
