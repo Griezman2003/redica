@@ -30,7 +30,7 @@ class InfoOverview extends Widget
                 ->color('primary')
                 ->icon('heroicon-o-banknotes'),
 
-            Stat::make('Mese pendiente', $mesesPendientes)
+            Stat::make('Mes pendiente', $mesesPendientes)
                 ->color($mesesPendientes > 0 ? 'warning' : 'success')
                 ->icon('heroicon-o-calendar'),
 
