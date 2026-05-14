@@ -18,7 +18,6 @@ return new class extends Migration
             $table->decimal('monto', 12, 2);
             $table->string('uuid')->unique();
             $table->json('mes');
-            $table->json('pendiente')->nullable();
             $table->timestamps();
         });
     }

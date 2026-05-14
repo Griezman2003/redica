@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Pago extends Model
 {
-    protected $fillable = ['concepto_id', 'cliente_id', 'nombre', 'monto', 'uuid', 'mes','pendiente'];
+    protected $fillable = ['concepto_id', 'cliente_id', 'nombre', 'monto', 'uuid', 'mes',];
 
     protected $casts = ['mes' => 'array',];
 
