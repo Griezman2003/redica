@@ -66,12 +66,13 @@ class ClienteResource extends Resource
                 ->label('Calle'),
                 TextColumn::make('estado')
                 ->label('Estado')
+                ->icon(fn ($record) => $record->estado ? 'heroicon-o-check-circle' : 'heroicon-o-x-circle')
                 ->getStateUsing(function ($record) {
-                    return $record->estado ? 'Activo' : 'No activo';
+                    return $record->estado ? 'Activo' : 'Inactivo';
                 })
                 ->colors([
                     'success' => 'Activo',
-                    'danger' => 'No activo',
+                    'danger' => 'Inactivo',
                 ])
                 ->badge(),
             ])
