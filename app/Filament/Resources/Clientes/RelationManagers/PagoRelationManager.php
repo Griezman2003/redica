@@ -27,8 +27,6 @@ class PagoRelationManager extends RelationManager
                 ->label('Monto')
                 ->numeric()
                 ->default(400)
-                ->disabled()
-                ->dehydrated()
                 ->required(),
                 Select::make('concepto_id')
                 ->label('Concepto')
