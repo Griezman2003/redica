@@ -17,7 +17,7 @@ class Pago extends Model
     
     public function concepto()
     {
-        return $this->belongsTo(concepto::class);
+        return $this->belongsTo(Concepto::class);
     }
 
     
