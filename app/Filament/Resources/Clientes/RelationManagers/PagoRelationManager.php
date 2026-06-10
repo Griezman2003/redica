@@ -13,6 +13,9 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Filament\Forms\Components\Select;
 use Filament\Actions\BulkAction;
+use Filament\Forms\Components\Toggle;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 
 
 class PagoRelationManager extends RelationManager
@@ -22,30 +25,68 @@ class PagoRelationManager extends RelationManager
     public function form(Schema $schema): Schema
     {
         return $schema
-            ->components([
+            ->schema([
                 TextInput::make('monto')
-                ->label('Monto')
-                ->numeric()
-                ->default(400)
-                ->required(),
+                        ->label('Monto')
+                        ->numeric()
+                        ->formatStateUsing(fn ($state) => $state ?? 0) 
+                        ->default(function () {
+                            $primerConcepto = \App\Models\Concepto::query()->first();
+                            return $primerConcepto ? $primerConcepto->monto : 0;
+                        })
+                        ->prefix('$')
+                        ->required(),
+
                 Select::make('concepto_id')
-                ->label('Concepto')
-                ->relationship('concepto', 'nombre')
-                ->default(\App\Models\Concepto::query()->first()?->id)
-                ->disabled(! \App\Models\Concepto::exists())
-                ->required()
-                ->helperText(
-                    ! \App\Models\Concepto::exists()
-                        ? '⚠ Debes crear un concepto primero para habilitar este campo'
-                        : null
-                ),
+                        ->label('Concepto')
+                        ->relationship('concepto', 'nombre')
+                        ->default(\App\Models\Concepto::query()->first()?->id)
+                        ->disabled(! \App\Models\Concepto::exists())
+                        ->required()
+                        ->live() 
+                        ->afterStateUpdated(function ($state, callable $set) {
+                            if ($state) {
+                                $concepto = \App\Models\Concepto::query()->find($state);
+                                
+                                if ($concepto) {
+                                    $set('monto', $concepto->monto);
+                                }
+                            } else {
+                                $set('monto', 0);
+                            }
+                        })
+                        ->helperText(
+                            ! \App\Models\Concepto::exists()
+                                ? '⚠ Debes crear un concepto primero para habilitar este campo'
+                                : null
+                        ),
+
+                Toggle::make('mes_manual')
+                    ->label('Asignar mes de pago manualmente (Regalo / Excepción)')
+                    ->live() 
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        if (! $state) {
+                            $mesAutonomo = \App\Models\Cliente::obtenerMesPendiente($this->ownerRecord);
+                            $set('mes', $mesAutonomo);
+                        }
+                    })
+                    ->columnSpanFull(),
+
                 TextInput::make('mes')
-                ->label('Mes Pediente')
-                ->default(fn ($record) =>\App\Models\Cliente::obtenerMesPendiente($this->ownerRecord))
-                ->disabled()
-                ->dehydrated()
-                ->columnSpanFull(),
-                ]);
+                    ->label('Mes Pendiente / Asignado')
+                    ->required()
+                    ->default(fn ($get) => $get('mes_manual') 
+                        ? null 
+                        : \App\Models\Cliente::obtenerMesPendiente($this->ownerRecord)
+                    )
+                    ->disabled(fn ($get) => ! $get('mes_manual'))
+                    ->dehydrated() 
+                    ->dehydrateStateUsing(fn ($state) => strtoupper(trim($state)))
+                    ->live(onBlur: true)
+                    ->formatStateUsing(fn ($state) => strtoupper(trim($state)))
+                    ->placeholder(fn ($get) => $get('mes_manual') ? 'Ej. FEBRERO' : '')
+                    ->columnSpanFull(),
+            ]);
     }
 
     public function table(Table $table): Table

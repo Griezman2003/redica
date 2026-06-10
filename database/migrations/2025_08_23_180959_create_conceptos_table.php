@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nombre')->unique();
             $table->string('descripcion')->nullable();
+            $table->decimal('monto');
             $table->json('atributos')->nullable();
             $table->timestamps();
         });

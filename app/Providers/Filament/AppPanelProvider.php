@@ -3,6 +3,7 @@
 namespace App\Providers\Filament;
 
 use Filament\Http\Middleware\Authenticate;
+use BezhanSalleh\FilamentShield\FilamentShieldPlugin;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -33,6 +34,7 @@ class AppPanelProvider extends PanelProvider
                 'primary' => '#FF0000',
             ])
             ->plugins([
+                FilamentShieldPlugin::make()->navigationGroup('Sistema'),
                 //
             ])
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')

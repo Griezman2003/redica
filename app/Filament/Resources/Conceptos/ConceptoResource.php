@@ -41,8 +41,12 @@ class ConceptoResource extends Resource
                     ->label('Etiquetas')
                     ->placeholder('Ejemplo (Pago Internet) y presiona Enter')
                     ->separator(',')
-                    ->required()
-                    ->columnSpanFull(),
+                    ->required(),
+                TextInput::make('monto')
+                ->label('Monto')
+                ->required()
+                ->prefix('$')
+                ->numeric(),
             ]);
     }
 
@@ -59,12 +63,17 @@ class ConceptoResource extends Resource
                 TextColumn::make('atributos')
                     ->label('Etiquetas')
                     ->badge(),
+                TextColumn::make('monto')
+                    ->label('Monto')
+                    ->money('MXN', locale: 'es_MX')
+                    ->badge(),
             ])
             ->filters([
                 //
             ])
             ->recordActions([
                 DeleteAction::make(),
+                EditAction::make(),
             ]);
             // ->toolbarActions([
             //     BulkActionGroup::make([

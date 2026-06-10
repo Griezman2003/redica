@@ -24,31 +24,40 @@ class Cliente extends Model
         return $this->belongsTo(User::class);
     }
 
-
-    public static function obtenerMesPendiente($cliente)
-    {
-        $meses = [
-            'enero',
-            'febrero',
-            'marzo',
-            'abril',
-            'mayo',
-            'junio',
-            'julio',
-            'agosto',
-            'septiembre',
-            'octubre',
-            'noviembre',
-            'diciembre',
-        ];
-        $pagados = $cliente->pago()
-        ->pluck('mes')->flatten()->map(fn ($mes) => strtolower($mes))->toArray();
-        
-        foreach ($meses as $mes) {
-            if (!in_array($mes, $pagados)) {
-                return $mes;
-            }
-        }
+public static function obtenerMesPendiente($cliente)
+{
+    if (! $cliente) {
         return null;
     }
+
+    $meses = [
+        'enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio',
+        'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'
+    ];
+
+    $anioActual = (int) date('Y');
+
+    $pagosDelAnio = $cliente->pago()
+        ->whereYear('created_at', $anioActual)
+        ->pluck('mes')
+        ->map(fn ($mes) => strtolower(trim($mes)))
+        ->toArray(); 
+
+    foreach ($meses as $mes) {
+        $mesPagado = false;
+
+        foreach ($pagosDelAnio as $pagoGuardado) {
+            if (str_contains($pagoGuardado, $mes)) {
+                $mesPagado = true;
+                break; 
+            }
+        }
+
+        if (! $mesPagado) {
+            return strtoupper($mes);
+        }
+    }
+    return 'ENERO';
+}
+
 }

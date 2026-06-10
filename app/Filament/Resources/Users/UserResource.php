@@ -13,6 +13,7 @@ use Filament\Actions\DeleteAction;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
 use Filament\Support\Icons\Heroicon;
+use Filament\Forms\Components\Select;
 
 
 class UserResource extends Resource
@@ -48,11 +49,11 @@ class UserResource extends Resource
                     ->required(fn ($livewire) => $livewire instanceof CreateRecord)
                     ->dehydrateStateUsing(fn ($state) => ! empty($state) ? Hash::make($state) : null)
                     ->dehydrated(fn ($state) => ! empty($state)),
-                // Select::make('roles')
-                //     ->relationship('roles', 'name')
-                //     ->multiple()
-                //     ->preload()
-                //     ->searchable(),
+                Select::make('roles')
+                    ->relationship('roles', 'name')
+                    ->multiple()
+                    ->preload()
+                    ->searchable(),
             ]);
     }
 
@@ -64,11 +65,11 @@ class UserResource extends Resource
                     ->searchable(),
                 TextColumn::make('email')
                     ->searchable(),
-                // TextColumn::make('roles.name')
-                //     ->icon('heroicon-o-shield-check')
-                //     ->color('success')
-                //     ->toggleable()
-                //     ->badge(),
+                TextColumn::make('roles.name')
+                    ->icon('heroicon-o-shield-check')
+                    ->color('success')
+                    ->toggleable()
+                    ->badge(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
