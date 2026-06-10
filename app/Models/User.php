@@ -6,11 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Filament\Models\Contracts\FilamentUser; // IMPORTANTE: Descomentado
+use Filament\Models\Contracts\FilamentUser;
 use Filament\Panel;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements FilamentUser // IMPLEMENTACIÓN ACTIVA
+class User extends Authenticatable implements FilamentUser 
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
@@ -58,17 +58,13 @@ class User extends Authenticatable implements FilamentUser // IMPLEMENTACIÓN AC
     }
 
     /**
-     * Control de acceso al Panel de Filament (Integración con Shield).
+     * Control de acceso al Panel de Filament shield
      */
     public function canAccessPanel(Panel $panel): bool
     {
-        // 1. Siempre permitimos el acceso en entorno local para desarrollo (Laragon)
         if (app()->environment('local')) {
             return true;
         }
-
-        // 2. En producción, verificamos si el usuario tiene un rol asignado a través de Spatie/Shield
-        // Esto evita que usuarios comunes sin roles asignados entren al backend.
         return $this->roles()->exists();
     }
 }
