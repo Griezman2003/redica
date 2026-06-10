@@ -6,12 +6,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-// use Filament\Models\Contracts\FilamentUser;
-// use Filament\Panel;
+use Filament\Models\Contracts\FilamentUser; // IMPORTANTE: Descomentado
+use Filament\Panel;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable 
-// implements FilamentUser
+class User extends Authenticatable implements FilamentUser // IMPLEMENTACIÓN ACTIVA
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable, HasRoles;
@@ -40,7 +39,7 @@ class User extends Authenticatable
     /**
      * Get the attributes that should be cast.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
     protected function casts(): array
     {
@@ -50,14 +49,26 @@ class User extends Authenticatable
         ];
     }
 
+    /**
+     * Relación con los clientes asignados a este usuario.
+     */
     public function cliente()
     {
         return $this->hasMany(Cliente::class);
     }
 
-    // public function canAccessPanel(Panel $panel): bool
-    // {
-    //     // En producción, solo permitimos entrar a tu correo de administrador
-    //     return true;
-    // }
+    /**
+     * Control de acceso al Panel de Filament (Integración con Shield).
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // 1. Siempre permitimos el acceso en entorno local para desarrollo (Laragon)
+        if (app()->environment('local')) {
+            return true;
+        }
+
+        // 2. En producción, verificamos si el usuario tiene un rol asignado a través de Spatie/Shield
+        // Esto evita que usuarios comunes sin roles asignados entren al backend.
+        return $this->roles()->exists();
+    }
 }
