@@ -10,6 +10,7 @@ use Filament\Resources\Pages\CreateRecord;
 use Filament\Tables\Table;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\EditAction;
 use Filament\Schemas\Schema;
 use Illuminate\Support\Facades\Hash;
 use Filament\Support\Icons\Heroicon;
@@ -84,6 +85,7 @@ class UserResource extends Resource
             ])
             ->recordActions([
                 DeleteAction::make(),
+                EditAction::make(),
             ]);
     }
 

@@ -15,6 +15,11 @@ class PagoOverview extends StatsOverviewWidget
 
     protected static ?int $sort = 1;
 
+    public static function canView(): bool
+    {
+        return \Illuminate\Support\Facades\Auth::user()?->hasRole('super_admin');
+    }
+
     protected function getStats(): array
     {
         

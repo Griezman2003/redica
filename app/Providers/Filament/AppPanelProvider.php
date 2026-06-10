@@ -47,6 +47,7 @@ class AppPanelProvider extends PanelProvider
                 \App\widget\PagoOverview::class,
                 \App\widget\PagosTable::class,
                 \App\widget\ClienteOverview::class,
+                \App\widget\WelcomeWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

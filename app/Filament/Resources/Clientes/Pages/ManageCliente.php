@@ -14,10 +14,10 @@ class ManageCliente extends ManageRecords
     {
         return [
             Actions\CreateAction::make()->createAnother(false)
-            ->using(function (array $data) {
-                $data['user_id'] = \Illuminate\Support\Facades\Auth::id();
-                return static::getResource()::getModel()::create($data);
-            }),  
+            // ->using(function (array $data) {
+            //     $data['user_id'] = \Illuminate\Support\Facades\Auth::id();
+            //     return static::getResource()::getModel()::create($data);
+            // }),  
         ];
     }
 }

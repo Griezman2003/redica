@@ -19,6 +19,11 @@ class ClienteOverview extends ChartWidget
         return 'line';
     }
 
+    public static function canView(): bool
+    {
+        return \Illuminate\Support\Facades\Auth::user()?->hasRole('super_admin');
+    }
+    
     /**
      * Metodo que filtra los años del cliente
      *

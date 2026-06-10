@@ -15,6 +15,11 @@ class PagosTable extends BaseWidget
 
     protected static ?string $heading = 'Pagos generales de los clientes';
 
+    public static function canView(): bool
+    {
+        return \Illuminate\Support\Facades\Auth::user()?->hasRole('super_admin');
+    }
+
     /**
      * Aqui heredamos la tabla del RelationManager de Pagos
      *

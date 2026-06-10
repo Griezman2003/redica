@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Clientes\RelationManagers;
 
-use App\Models\Pago;
 use Filament\Actions\CreateAction;
 use Filament\Actions\DeleteAction;
 use Filament\Actions\EditAction;
@@ -14,8 +13,6 @@ use Filament\Tables\Table;
 use Filament\Forms\Components\Select;
 use Filament\Actions\BulkAction;
 use Filament\Forms\Components\Toggle;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 
 
 class PagoRelationManager extends RelationManager
@@ -130,7 +127,7 @@ class PagoRelationManager extends RelationManager
                 //
             ])
             ->headerActions([
-            CreateAction::make()
+            CreateAction::make()->visible(fn () => \Illuminate\Support\Facades\Auth::user()?->hasRole('super_admin'))
             ->createAnother(false)
             ->after(function ($record) {
                 $record->generarPdf();
@@ -154,8 +151,8 @@ class PagoRelationManager extends RelationManager
                         ->modalWidth("6xl")
                 ->slideOver()
                 ->modalSubmitAction(false),
-                EditAction::make(),
-                DeleteAction::make(),
+                EditAction::make()->visible(fn () => \Illuminate\Support\Facades\Auth::user()?->hasRole('super_admin')),
+                DeleteAction::make()->visible(fn () => \Illuminate\Support\Facades\Auth::user()?->hasRole('super_admin')),
                 \Filament\Actions\Action::make("WhatsApp")
                     ->label("Enviar WhatsApp")
                     ->icon("heroicon-o-chat-bubble-left-right")
@@ -181,7 +178,8 @@ class PagoRelationManager extends RelationManager
                     ->visible(function ($record) {
                         $cliente = $record->cliente ?? $this->ownerRecord;
                         return ! empty($cliente?->telefono);
-                    }),
+                    })
+                    ->visible(fn () => \Illuminate\Support\Facades\Auth::user()?->hasRole('super_admin')),
                 ])->button()
                 ->badge()
                 ->icon('heroicon-o-cog')
