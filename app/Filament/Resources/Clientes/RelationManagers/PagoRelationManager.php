@@ -156,6 +156,32 @@ class PagoRelationManager extends RelationManager
                 ->modalSubmitAction(false),
                 EditAction::make(),
                 DeleteAction::make(),
+                \Filament\Actions\Action::make("WhatsApp")
+                    ->label("Enviar WhatsApp")
+                    ->icon("heroicon-o-chat-bubble-left-right")
+                    ->color("success") 
+                    ->url(function ($record) {
+                        $cliente = $record->cliente ?? $this->ownerRecord; 
+
+                        if (! $cliente || ! $cliente->telefono) {
+                            return null; 
+                        }
+
+                        $telefonoLimpio = preg_replace('/[^0-9]/', '', $cliente->telefono);
+
+                        if (! str_starts_with($telefonoLimpio, '52')) {
+                            $telefonoLimpio = '52' . $telefonoLimpio;
+                        }
+
+                        $mensaje = rawurlencode("¡Hola *{$cliente->nombre}*! Aquí tienes el enlace de tu ticket de pago por el concepto de *{$record->concepto?->nombre}* correspondiente al mes de *{$record->mes}*: " . route("pdf", ["pago" => $record]));
+
+                        return "https://wa.me/{$telefonoLimpio}?text={$mensaje}";
+                    })
+                    ->openUrlInNewTab()
+                    ->visible(function ($record) {
+                        $cliente = $record->cliente ?? $this->ownerRecord;
+                        return ! empty($cliente?->telefono);
+                    }),
                 ])->button()
                 ->badge()
                 ->icon('heroicon-o-cog')
